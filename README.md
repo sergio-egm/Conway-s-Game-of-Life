@@ -2,6 +2,7 @@
 
 This repository offer a code for __Conway's Game of Life__.
 
+In the files [Life.h](./Life.h) and [Life.cpp](./Life.cpp) is defined the class used for the simulation.  The code [life.cpp](life.cpp) was used to test the basic component of the class.
 
 ## License
 
