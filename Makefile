@@ -1,16 +1,23 @@
-SETS:= -Wall -pedantic
-CODE:= life.x #sudoku-test 
+CXXFLAGS:= -Wall -pedantic -MMD -MP
 
+CXX  := g++
+SRC  := simulation/Life.cpp simulation/life.cpp
+OBJ  := $(SRC:.cpp=.o)
+DEPS := $(OBJ:.o=.d)
 
-compila: ${CODE}
+bin/life.x: ${OBJ} | bin
+	${CXX} ${CXXFLAGS} $^ -o $@
 
+%.o: %.cpp
+	${CXX} ${CXXFLAGS} $< -c -o $@
 
-#sudoku-test: $@.o sudoku-test/Solutore.o
-#	g++ ${SETS} $^ -o $@
+bin:
+	mkdir -p bin
 
-%.x: Life.o %.cpp
-	g++ ${SETS} $^ -o $@
+clean:
+	rm -f ${OBJ} ${DEPS} bin/life.x
 
-%.o: %.cpp %.h
-	g++ ${SETS} $< -c
+run: bin/life.x
+	./bin/life.x ${ARGS}
 
+-include ${DEPS}

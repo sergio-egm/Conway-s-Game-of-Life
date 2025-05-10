@@ -1,8 +1,10 @@
 # Conway's Game of Life
 
 This repository provides an implementation of __Conway's Game of Life__.
+
 The game takes place on an _n × n_ grid where each cell is either __dead__ (_0_) or __alive__ (_1_).
 The next generation of the system is determined based on the state of each cell's neighbors in the previous generation.
+
 __Neighbors__ are the cells adjacent both laterally and diagonally.
 
 ## Rules
@@ -16,8 +18,12 @@ The rules of the game are as follows:
 
 ## Repository
 
-The files [Life.h](Life.h) and [Life.cpp](Life.cpp) define the __class__ used for the simulation.
-The file [life.cpp](life.cpp) is used to __test__ the basic components of the class.
+The repository is organized as follows:
+
+- [Makefile](Makefile): used to __build__ and __run__ the simulation code.
+- [simulation](simulation): contains the code used for the _simulation_, written in __C++__.
+- [animation](animation): contains the code used to create the _animation_, written in __Julia__.
+- [data](data): stores the _output_ of the simulation in binaries files (`.bin`).
 
 ## License
 
