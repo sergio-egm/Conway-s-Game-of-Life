@@ -17,7 +17,9 @@ int main(int argc , char** argv){
     cout << endl;
 
     life.update();
-    life.print();    
+    life.print();
+    
+    life.save_binary("data/frame.bin");
 
     return 0;
 }

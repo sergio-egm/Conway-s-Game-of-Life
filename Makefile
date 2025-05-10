@@ -20,7 +20,8 @@ data:
 clean:
 	rm -f ${OBJ} ${DEPS} bin/life.x
 
-run: bin/life.x | data
+run: bin/life.x data animation/animation.jl
 	./bin/life.x ${ARGS}
+	julia animation/animation.jl
 
 -include ${DEPS}

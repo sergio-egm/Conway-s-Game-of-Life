@@ -84,6 +84,30 @@ void Life::print(std::ostream &os) const{
     }
 }
 
+void Life::save_binary(const std::string &fileName) const{
+    std::ofstream fout(fileName , std::ios::binary);
+
+    int** rowPtr = matrix;
+    int** rowEnd = matrix + size;
+
+    while(rowPtr < rowEnd){
+        int* colPtr = *rowPtr;
+        int* colEnd = *rowPtr + size;
+
+        while(colPtr < colEnd){
+            unsigned char value = static_cast<unsigned char>(*colPtr);
+
+            fout.write(reinterpret_cast<const char*>(&value),1);
+
+            colPtr++;
+        }
+
+        rowPtr++;
+    }
+
+    fout.close();
+}
+
 int Life::get(unsigned int i, unsigned int j) const{
     return matrix[(i+size) % size][(j+size) % size];
 }

@@ -2,6 +2,7 @@
 
 #include<iostream>
 #include<fstream>
+#include<string>
 
 class Life{
     public:
@@ -10,6 +11,7 @@ class Life{
         ~Life();
 
         void print(std::ostream &os = std::cout) const;
+        void save_binary(const std::string& fileName) const;
 
         int  get(unsigned int i , unsigned int j) const;
         void set(unsigned int i , unsigned int j , int val);
@@ -18,7 +20,6 @@ class Life{
         int operator()(int i , int j) const;
 
         Life copy(void) const;
-
         void update(void);
     private:
         int size;
