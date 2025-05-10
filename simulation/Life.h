@@ -7,6 +7,7 @@
 class Life{
     public:
         Life(int size , double prob = .5 , int seed = 0);
+        Life(const std::string& file_name);
         Life(int size , int** matrix);
         ~Life();
 

@@ -21,9 +21,13 @@ The rules of the game are as follows:
 The repository is organized as follows:
 
 - [Makefile](Makefile): used to __build__ and __run__ the simulation code.
+- [INPUT.dat](INPUT.dat): contains the __input values__ of the simulation.
 - [simulation](simulation): contains the code used for the _simulation_, written in __C++__.
 - [animation](animation): contains the code used to create the _animation_, written in __Julia__.
 - [data](data): stores the _output_ of the simulation in binaries files (`.bin`).
+- [.bckup](.bckup): contains copies of:
+  - __INPUT.dat__.
+  - __initial.dat__:setted initial configuration.
 
 ## License
 

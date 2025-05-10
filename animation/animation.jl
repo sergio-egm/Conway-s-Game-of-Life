@@ -6,6 +6,10 @@ function load_frame(path::String , size::Int)
     return grid
 end
 
-grid = load_frame("data/frame.bin" , 5)
+size = open("INPUT.dat") do io
+    parse(Int , readline(io))
+end
+
+grid = load_frame("data/frame.bin" , size)
 
 savefig(heatmap(grid' , colorbar = false , axis = false) , "frame.png")

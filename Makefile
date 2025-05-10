@@ -3,9 +3,10 @@ CXXFLAGS:= -Wall -pedantic -MMD -MP
 CXX  := g++
 SRC  := simulation/Life.cpp simulation/life.cpp
 OBJ  := $(SRC:.cpp=.o)
+BIN  := bin/life.x
 DEPS := $(OBJ:.o=.d)
 
-bin/life.x: ${OBJ} | bin
+${BIN}: ${OBJ} | bin
 	${CXX} ${CXXFLAGS} $^ -o $@
 
 %.o: %.cpp
@@ -17,11 +18,23 @@ bin:
 data:
 	mkdir -p data
 
-clean:
-	rm -f ${OBJ} ${DEPS} bin/life.x
+INPUT.dat: .bckup/INPUT.dat
+	cp $^ .
 
-run: bin/life.x data animation/animation.jl
-	./bin/life.x ${ARGS}
-	julia animation/animation.jl
+clean:
+	rm -f ${OBJ} ${DEPS} ${BIN}
+
+run: ${BIN} data INPUT.dat animation/animation.jl
+	@./${BIN} INPUT.dat; RET=$$?; \
+	if [ $$RET -eq 0 ]; then \
+	    echo "Simulation compleated without any problem!"; \
+		julia animation/animation.jl; \
+	elif [ $$RET -eq 1 ];then \
+	    echo "ERROR: Not specified input file: './bin/life.x {input_file_name}'"; \
+	elif [ $$RET -eq 2 ]; then \
+	    echo "ERROR: Invalid input file name!"; \
+	else \
+	    echo "ERROR: Not implemented error return $$RET"; \
+	fi
 
 -include ${DEPS}
