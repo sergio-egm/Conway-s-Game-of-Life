@@ -14,10 +14,13 @@ bin/life.x: ${OBJ} | bin
 bin:
 	mkdir -p bin
 
+data:
+	mkdir -p data
+
 clean:
 	rm -f ${OBJ} ${DEPS} bin/life.x
 
-run: bin/life.x
+run: bin/life.x | data
 	./bin/life.x ${ARGS}
 
 -include ${DEPS}
