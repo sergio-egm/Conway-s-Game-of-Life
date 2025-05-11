@@ -192,14 +192,26 @@ int Life::run(void){
     std::string fileName = "data/frame";
     std::string dataType = ".bin";
 
+    int count = 0;
+
     save_binary(fileName + std::string("0") + dataType);
 
     std::cout << "Running Game of Life." << std::endl;
 
+    std::cout << "[";
+
     for(int i = 1 ; i <= generations ; i++){
         update();
         save_binary(fileName + std::to_string(i) + dataType);
+
+        if(i*100/generations > count){
+            std::cout << "=";
+            std::cout.flush();
+            count += 5;
+        }
     }
+
+    std::cout << "]" << std::endl;
 
     return 0;
 }
