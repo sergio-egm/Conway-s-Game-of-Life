@@ -16,6 +16,8 @@ The rules of the game are as follows:
 - A cell with __exactly 2__ living neighbors remains in its __current state__.
 - A dead cell with __exactly 3__ living neighbors becomes __alive__ (_reproduction_).
 
+![GoL GIF](https://github.com/sergio-egm/Conway-s-Game-of-Life/life.gif)
+
 ## Repository
 
 The repository is organized as follows:
