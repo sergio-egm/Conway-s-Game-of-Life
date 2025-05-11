@@ -1,10 +1,12 @@
 5
+10
 0.5
 0
 
 
 
 
-    >> Length of the lactice's side
-    >> Probability to born alive
-    >> Random generator seed
+    >> Length of the lactice's side - int
+    >> Number of generation         - int
+    >> Probability to born alive    - double
+    >> Random generator seed        - int

@@ -24,6 +24,9 @@ INPUT.dat: .bckup/INPUT.dat
 clean:
 	rm -f ${OBJ} ${DEPS} ${BIN}
 
+remove:
+	rm -f data/*.bin
+
 run: ${BIN} data INPUT.dat animation/animation.jl
 	@./${BIN} INPUT.dat; RET=$$?; \
 	if [ $$RET -eq 0 ]; then \

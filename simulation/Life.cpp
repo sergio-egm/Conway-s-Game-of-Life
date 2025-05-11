@@ -1,7 +1,10 @@
 #include "Life.h"
 #include <random>
 
-Life::Life(int size , double prob , int seed):size(size){
+Life::Life(int size , double prob , int seed , int generations):
+    size(size),
+    generations(generations)
+{
     matrix = new int* [size];
 
     srand(seed);
@@ -23,6 +26,7 @@ Life::Life(int size , double prob , int seed):size(size){
     }
 
     std::cout << "Grid size:  ( " << size << " x " << size << " )" << std::endl;
+    std::cout << "# Gens:     " << generations << std::endl;
     std::cout << "Alive prob: " << prob << std::endl;
     std::cout << "Seed:       " << seed << std::endl;
     std::cout << std::endl;
@@ -38,6 +42,7 @@ Life::Life(const std::string &file_name){
         exit(2);
 
     fin >> size;
+    fin >> generations;
     fin >> prob;
     fin >> seed;
 
@@ -64,6 +69,7 @@ Life::Life(const std::string &file_name){
     }
 
     std::cout << "Grid size:  ( " << size << " x " << size << " )" << std::endl;
+    std::cout << "# Gens:     " << generations << std::endl;
     std::cout << "Alive prob: " << prob << std::endl;
     std::cout << "Seed:       " << seed << std::endl;
     std::cout << std::endl;
@@ -161,8 +167,7 @@ int Life::operator()(int i, int j) const{
     return matrix[(i+size) % size][(j+size) % size];
 }
 
-Life Life::copy(void) const
-{
+Life Life::copy(void) const{
     return Life(size , matrix);
 }
 
@@ -181,4 +186,20 @@ void Life::update(void){
             set(i , j , (val == 3) || (val == 2 && tmp(i,j) == 1));
         }
     }
+}
+
+int Life::run(void){
+    std::string fileName = "data/frame";
+    std::string dataType = ".bin";
+
+    save_binary(fileName + std::string("0") + dataType);
+
+    std::cout << "Running Game of Life." << std::endl;
+
+    for(int i = 1 ; i <= generations ; i++){
+        update();
+        save_binary(fileName + std::to_string(i) + dataType);
+    }
+
+    return 0;
 }

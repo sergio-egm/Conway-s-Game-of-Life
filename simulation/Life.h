@@ -6,7 +6,7 @@
 
 class Life{
     public:
-        Life(int size , double prob = .5 , int seed = 0);
+        Life(int size , double prob = .5 , int seed = 0 , int generations = 1);
         Life(const std::string& file_name);
         Life(int size , int** matrix);
         ~Life();
@@ -22,7 +22,10 @@ class Life{
 
         Life copy(void) const;
         void update(void);
+
+        int run(void);
     private:
-        int size;
-        int** matrix;
+        int size;           // Lentght of the side of the square lactice
+        int generations;    // Numbar of generations of the simulation
+        int** matrix;       // Lactice
 };

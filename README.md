@@ -27,7 +27,15 @@ The repository is organized as follows:
 - [data](data): stores the _output_ of the simulation in binaries files (`.bin`).
 - [.bckup](.bckup): contains copies of:
   - __INPUT.dat__.
-  - __initial.dat__:setted initial configuration.
+  - __initial.dat__: sets initial configuration. (Not yet!)
+
+## Run
+
+It's possible to set personalized parametes modifing the file `INPUT.dat`, then, run the simulation and get the animation thought the comand:
+
+```bash
+make run
+```
 
 ## License
 

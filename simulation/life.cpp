@@ -8,13 +8,5 @@ int main(int argc , char** argv){
     
     Life life(argv[1]);
 
-    life.print();
-    cout << endl;
-
-    life.update();
-    life.print();
-    
-    life.save_binary("data/frame.bin");
-
-    return 0;
+    return life.run();
 }
