@@ -14,7 +14,7 @@ Class that define the lactice and the updating rules.
 ```c++
 class Life{
     public:
-        Life(int size , double prob = .5 , int seed = 0 , int generations = 1);
+        Life(int size , double prob = .5 , int seed = 0 , int generations = 1 , bool save = false);
         Life(const std::string& file_name);         // Input parameter form a file
         Life(int size , int** matrix);              // Initial configuration fixed
         ~Life();
@@ -24,7 +24,7 @@ class Life{
 
         int  get(unsigned int i , unsigned int j) const;
         void set(unsigned int i , unsigned int j , int val);
-        int  shape(void) const;
+        int  shape(void) const{return size;}
 
         int operator()(int i , int j) const;    // Return the state of the (i , j) matrix element
 

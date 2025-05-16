@@ -18,6 +18,9 @@ bin:
 data:
 	mkdir -p data
 
+save:
+	mkdir -p save
+
 INPUT.dat: .bckup/INPUT.dat
 	cp $^ .
 
@@ -27,7 +30,7 @@ clean:
 remove:
 	rm -f data/*.bin
 
-run: ${BIN} data INPUT.dat animation/animation.jl
+run: ${BIN} data INPUT.dat animation/animation.jl save
 	@./${BIN} INPUT.dat; RET=$$?; \
 	if [ $$RET -eq 0 ]; then \
 	    echo "Simulation compleated without any problem!"; \
@@ -36,6 +39,8 @@ run: ${BIN} data INPUT.dat animation/animation.jl
 	    echo "ERROR: Not specified input file: './bin/life.x {input_file_name}'"; \
 	elif [ $$RET -eq 2 ]; then \
 	    echo "ERROR: Invalid input file name!"; \
+	elif [ $$RET -eq 3 ]; then \
+	    echo "ERROR: Initial configuration file not found!"; \
 	else \
 	    echo "ERROR: Not implemented error return $$RET"; \
 	fi

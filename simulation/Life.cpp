@@ -1,9 +1,10 @@
 #include "Life.h"
 #include <random>
 
-Life::Life(int size , double prob , int seed , int generations):
+Life::Life(int size , double prob , int seed , int generations , bool save):
     size(size),
-    generations(generations)
+    generations(generations),
+    save(save)
 {
     matrix = new int* [size];
 
@@ -29,49 +30,102 @@ Life::Life(int size , double prob , int seed , int generations):
     std::cout << "# Gens:     " << generations << std::endl;
     std::cout << "Alive prob: " << prob << std::endl;
     std::cout << "Seed:       " << seed << std::endl;
+    std::cout << (this->save ? "It will save the final config." : "It won't save the final config.") << std::endl; 
     std::cout << std::endl;
 }
 
 Life::Life(const std::string &file_name){
-    double prob;
-    int    seed;
+    bool get_config;
 
     std::ifstream fin(file_name);
 
     if(!fin.is_open())
         exit(2);
 
-    fin >> size;
+    fin >> get_config;
     fin >> generations;
-    fin >> prob;
-    fin >> seed;
+    fin >> save;
 
-    fin.close();
-    
-    matrix = new int* [size];
+    if(get_config){
+        std::ifstream config("save/config.dat");
 
-    srand(seed);
+        int init_gen;
 
-    int** rowPtr = matrix;
-    int** rowEnd = matrix + size;
+        if(!config.is_open()){
+            std::cerr << "ERROR: 'save/config.dat' doesn't exist!" << std::endl;
+            config.close();
 
-    while (rowPtr < rowEnd){
-        *rowPtr = new int[size];
-
-        int* colPtr = *rowPtr;
-        int* colEnd = *rowPtr + size;
-
-        while (colPtr < colEnd){
-            *colPtr++ = (static_cast<double>(std::rand()) / RAND_MAX) < prob;
+            config.open(".bckup/initial.dat");
+            if(!config.is_open())
+                exit(3);
         }
 
-        rowPtr++;
+        config >> size;
+        config >> init_gen;
+
+        generations += init_gen;
+
+        matrix = new int*[size];
+
+        int** rowPtr = matrix;
+        int** rowEnd = matrix + size;
+
+        while(rowPtr < rowEnd){
+            *rowPtr = new int[size];
+
+            int* colPtr = *rowPtr;
+            int* colEnd = *rowPtr + size;
+
+            while(colPtr < colEnd){
+                config >> *colPtr;
+                colPtr++;
+            }
+
+            rowPtr++;
+        }
+
+        config.close();
+
+        std::cout << "Initial generation: " << init_gen << std::endl;
     }
+    else{
+        double prob;
+        int    seed;
+        fin >> size;
+        fin >> prob;
+        fin >> seed;
+
+        fin.close();
+    
+        matrix = new int* [size];
+
+        srand(seed);
+
+        int** rowPtr = matrix;
+        int** rowEnd = matrix + size;
+
+        while (rowPtr < rowEnd){
+            *rowPtr = new int[size];
+
+            int* colPtr = *rowPtr;
+            int* colEnd = *rowPtr + size;
+
+            while (colPtr < colEnd){
+                *colPtr++ = (static_cast<double>(std::rand()) / RAND_MAX) < prob;
+            }
+
+            rowPtr++;
+        }
+
+
+    std::cout << "Alive prob: " << prob << std::endl;
+    std::cout << "Seed:       " << seed << std::endl;
+    }
+
 
     std::cout << "Grid size:  ( " << size << " x " << size << " )" << std::endl;
     std::cout << "# Gens:     " << generations << std::endl;
-    std::cout << "Alive prob: " << prob << std::endl;
-    std::cout << "Seed:       " << seed << std::endl;
+    std::cout << (save ? "It will save the final config." : "It won't save the final config.") << std::endl;
     std::cout << std::endl;
 }
 

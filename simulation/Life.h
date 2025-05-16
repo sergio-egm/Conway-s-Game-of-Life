@@ -6,7 +6,7 @@
 
 class Life{
     public:
-        Life(int size , double prob = .5 , int seed = 0 , int generations = 1);
+        Life(int size , double prob = .5 , int seed = 0 , int generations = 1 , bool save = false);
         Life(const std::string& file_name);         // Input parameter form a file
         Life(int size , int** matrix);              // Initial configuration fixed
         ~Life();
@@ -28,4 +28,5 @@ class Life{
         int size;           // Lentght of the side of the square lactice
         int generations;    // Numbar of generations of the simulation
         int** matrix;       // Lactice
+        bool save;          // Save the document?
 };
