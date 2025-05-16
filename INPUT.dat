@@ -1,12 +1,16 @@
+1
 10
-100
+1
+5
 0.5
 0
 
 
 
 
-    >> Length of the lactice's side - int
-    >> Number of generation         - int
-    >> Probability to born alive    - double
-    >> Random generator seed        - int
+    >> Use saved config? (y=1 / N = 0)  - bool
+    >> Number of generation             - int
+    >> Save final config? (y=1 / N = 0) - bool
+    >> Length of the lactice's side     - int
+    >> Probability to born alive        - double
+    >> Random generator seed            - int
