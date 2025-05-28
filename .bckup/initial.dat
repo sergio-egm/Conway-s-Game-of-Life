@@ -1,9 +1,9 @@
-5 1
+5 1 0
 0 0 0 0 0
 0 0 0 0 0
 0 1 1 1 0
 0 0 0 0 0
 0 0 0 0 0
 
-    >> Size ; Number of generation
+    >> Size ; Number of generation ; T0
     >> Initial lactice
