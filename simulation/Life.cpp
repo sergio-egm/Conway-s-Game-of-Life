@@ -4,7 +4,8 @@
 Life::Life(int size , double prob , int seed , int generations , bool save):
     size(size),
     generations(generations),
-    save(save)
+    save(save),
+    T0(0)
 {
     matrix = new int* [size];
 
@@ -49,8 +50,6 @@ Life::Life(const std::string &file_name){
     if(get_config){
         std::ifstream config("save/config.dat");
 
-        int init_gen;
-
         if(!config.is_open()){
             std::cerr << "ERROR: 'save/config.dat' doesn't exist!" << std::endl;
             config.close();
@@ -61,14 +60,18 @@ Life::Life(const std::string &file_name){
         }
 
         config >> size;
-        config >> init_gen;
+        config >> T0;
 
-        generations += init_gen;
+        generations += T0;
 
         matrix = new int*[size];
 
         int** rowPtr = matrix;
         int** rowEnd = matrix + size;
+
+        int space;
+
+        config >> space;
 
         while(rowPtr < rowEnd){
             *rowPtr = new int[size];
@@ -86,7 +89,7 @@ Life::Life(const std::string &file_name){
 
         config.close();
 
-        std::cout << "Initial generation: " << init_gen << std::endl;
+        std::cout << "Initial generation: " << T0 << std::endl;
     }
     else{
         double prob;
@@ -169,6 +172,8 @@ void Life::print(std::ostream &os) const{
     int** rowPtr = matrix;
     int** rowEnd = matrix + size;
 
+    os << size << ' ' << generations << ' ' << T0 << std::endl;
+
     while(rowPtr < rowEnd){
         int* colPtr = *rowPtr;
         int* colEnd = *rowPtr + size;
@@ -242,19 +247,19 @@ void Life::update(void){
     }
 }
 
-int Life::run(void){
+int Life::run(const std::string &saveFile){
     std::string fileName = "data/frame";
     std::string dataType = ".bin";
 
     int count = 0;
 
-    save_binary(fileName + std::string("0") + dataType);
+    save_binary(fileName + std::to_string(T0) + dataType);
 
     std::cout << "Running Game of Life." << std::endl;
 
     std::cout << "[";
 
-    for(int i = 1 ; i <= generations ; i++){
+    for(int i = T0+1 ; i <= generations ; i++){
         update();
         save_binary(fileName + std::to_string(i) + dataType);
 
@@ -266,6 +271,17 @@ int Life::run(void){
     }
 
     std::cout << "]" << std::endl;
+
+    if(this->save){
+        std::ofstream fout(saveFile);
+
+        print(fout);
+
+        fout << "\t>> Size ; Number of generation ; T0" << std::endl;
+        fout << "\t>> Initial lactice" << std::endl;
+
+        fout.close();
+    }
 
     return 0;
 }

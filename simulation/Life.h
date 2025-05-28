@@ -23,10 +23,11 @@ class Life{
         Life copy(void) const;
         void update(void);      // Generate next generation
 
-        int run(void);          // Run the simulation for the fixed time
+        int run(const std::string &saveFile = "save/config.dat");          // Run the simulation for the fixed time
     private:
         int size;           // Lentght of the side of the square lactice
         int generations;    // Numbar of generations of the simulation
         int** matrix;       // Lactice
         bool save;          // Save the document?
+        int T0;             // Initial time
 };
