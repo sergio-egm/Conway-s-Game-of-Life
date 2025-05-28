@@ -231,19 +231,38 @@ Life Life::copy(void) const{
 }
 
 void Life::update(void){
-    Life tmp = copy();
-
     int val = 0;
+    int alive;
 
     for(int i = 0 ; i < size ; i++){
         for(int j = 0 ; j < size ; j++){
-            val = tmp(i-1,j+1) + tmp(i,j+1) + tmp(i+1 , j+1);
-            val += tmp(i-1,j-1) + tmp(i,j-1) + tmp(i+1 , j-1);
+            val = (*this)(i-1,j+1)%2 + (*this)(i,j+1)%2 + (*this)(i+1 , j+1)%2;
+            val += (*this)(i-1,j-1)%2 + (*this)(i,j-1)%2 + (*this)(i+1 , j-1)%2;
 
-            val += tmp(i-1,j) + tmp(i+1 , j);
+            val += (*this)(i-1,j)%2 + (*this)(i+1 , j)%2;
 
-            set(i , j , (val == 3) || (val == 2 && tmp(i,j) == 1));
+            alive = (val == 3) || (val == 2 && (*this)(i,j) == 1);
+
+            set(i , j , matrix[i][j] + 2 * alive);
         }
+    }
+
+    int** rowPtr = matrix;
+    int** rowEnd = matrix + size;
+    int* colPtr;
+    int* colEnd;
+
+    while(rowPtr < rowEnd){
+        colPtr = *rowPtr;
+        colEnd = colPtr + size;
+
+        while(colPtr < colEnd){
+            *colPtr = (*colPtr) / 2;
+
+            ++colPtr;
+        }
+
+        ++rowPtr;
     }
 }
 
