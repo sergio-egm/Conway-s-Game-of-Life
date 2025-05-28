@@ -1,9 +1,9 @@
 CXXFLAGS:= -Wall -pedantic -MMD -MP
 
 CXX  := g++
-SRC  := simulation/Life.cpp simulation/life.cpp
+SRC  := simulation/Life.cpp simulation/main.cpp
 OBJ  := $(SRC:.cpp=.o)
-BIN  := bin/life.x
+BIN  := bin/main.x
 DEPS := $(OBJ:.o=.d)
 PYTH := personal
 
