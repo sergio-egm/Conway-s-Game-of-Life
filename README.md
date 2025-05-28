@@ -30,6 +30,9 @@ The repository is organized as follows:
 - [.bckup](.bckup): contains copies of:
   - __INPUT.dat__.
   - __initial.dat__: defoult initial configuration.
+- [examples](examples): Examples of different initial conditions:
+  - [Random](examples/random.gif): 50% of cells alive in the begining.
+  - [Fixed](examples/fixed.gif): fixed shape at the begining.
 
 ## Run
 
