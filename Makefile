@@ -5,6 +5,10 @@ SRC  := simulation/Life.cpp simulation/life.cpp
 OBJ  := $(SRC:.cpp=.o)
 BIN  := bin/life.x
 DEPS := $(OBJ:.o=.d)
+PYTH := personal
+
+all: ${BIN}
+
 
 ${BIN}: ${OBJ} | bin
 	${CXX} ${CXXFLAGS} $^ -o $@
@@ -28,7 +32,7 @@ clean:
 	rm -f ${OBJ} ${DEPS} ${BIN}
 
 remove:
-	rm -f data/*.bin
+	rm -f data/*.bin save/config.dat
 
 run: ${BIN} data INPUT.dat animation/animation.jl save
 	@./${BIN} INPUT.dat; RET=$$?; \
@@ -46,3 +50,6 @@ run: ${BIN} data INPUT.dat animation/animation.jl save
 	fi
 
 -include ${DEPS}
+
+${PYTH}: save/${PYTH}.py | save
+	python3 $^ > save/config.dat

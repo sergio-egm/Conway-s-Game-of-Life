@@ -33,6 +33,8 @@ The repository is organized as follows:
 - [examples](examples): Examples of different initial conditions:
   - [Random](examples/random.gif): 50% of cells alive in the begining.
   - [Fixed](examples/fixed.gif): fixed shape at the begining.
+- [save](save): store the final configurations.
+  - [personal.py](personal.py): help to build fixed initial configuration.
 
 ## Run
 
