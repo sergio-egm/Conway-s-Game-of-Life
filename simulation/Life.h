@@ -6,7 +6,12 @@
 
 class Life{
     public:
-        Life(int size , double prob = .5 , int seed = 0 , int generations = 1 , bool save = false);
+        Life(int size ,
+            double prob = .5 ,
+            int seed = 0 ,
+            int generations = 1 ,
+            bool save = false,
+            bool printData = true);
         Life(const std::string& file_name);         // Input parameter form a file
         Life(int size , int** matrix);              // Initial configuration fixed
         ~Life();
@@ -17,6 +22,8 @@ class Life{
         int  get(unsigned int i , unsigned int j) const;
         void set(unsigned int i , unsigned int j , int val);
         int  shape(void) const{return size;}
+
+        int get_total(void) const{return total;}
 
         int operator()(int i , int j) const;    // Return the state of the (i , j) matrix element
 
@@ -30,4 +37,5 @@ class Life{
         int** matrix;       // Lactice
         bool save;          // Save the document?
         int T0;             // Initial time
+        int total;           // Total number of cells alive
 };

@@ -1,0 +1,14 @@
+100
+100
+0.5
+0
+100
+
+
+
+
+    >> Number of generation             - int
+    >> Length of the lactice's side     - int
+    >> Probability to born alive        - double
+    >> Random generator seed            - int
+    >> Number of samples                - int

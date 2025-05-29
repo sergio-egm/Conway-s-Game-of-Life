@@ -1,11 +1,12 @@
 #include "Life.h"
 #include <random>
 
-Life::Life(int size , double prob , int seed , int generations , bool save):
+Life::Life(int size , double prob , int seed , int generations , bool save , bool printData):
     size(size),
     generations(generations),
     save(save),
-    T0(0)
+    T0(0),
+    total(0)
 {
     matrix = new int* [size];
 
@@ -21,21 +22,26 @@ Life::Life(int size , double prob , int seed , int generations , bool save):
         int* colEnd = *rowPtr + size;
 
         while (colPtr < colEnd){
-            *colPtr++ = (static_cast<double>(std::rand()) / RAND_MAX) < prob;
+            *colPtr = (static_cast<double>(std::rand()) / RAND_MAX) < prob;
+            total += *colPtr;
+
+            colPtr++;
         }
 
         rowPtr++;
     }
 
-    std::cout << "Grid size:  ( " << size << " x " << size << " )" << std::endl;
-    std::cout << "# Gens:     " << generations << std::endl;
-    std::cout << "Alive prob: " << prob << std::endl;
-    std::cout << "Seed:       " << seed << std::endl;
-    std::cout << (this->save ? "It will save the final config." : "It won't save the final config.") << std::endl; 
-    std::cout << std::endl;
+    if(printData){
+        std::cout << "Grid size:  ( " << size << " x " << size << " )" << std::endl;
+        std::cout << "# Gens:     " << generations << std::endl;
+        std::cout << "Alive prob: " << prob << std::endl;
+        std::cout << "Seed:       " << seed << std::endl;
+        std::cout << (this->save ? "It will save the final config." : "It won't save the final config.") << std::endl; 
+        std::cout << std::endl;
+    }
 }
 
-Life::Life(const std::string &file_name){
+Life::Life(const std::string &file_name): total(0) {
     bool get_config;
 
     std::ifstream fin(file_name);
@@ -81,6 +87,7 @@ Life::Life(const std::string &file_name){
 
             while(colPtr < colEnd){
                 config >> *colPtr;
+                total += *colPtr;
                 colPtr++;
             }
 
@@ -114,7 +121,9 @@ Life::Life(const std::string &file_name){
             int* colEnd = *rowPtr + size;
 
             while (colPtr < colEnd){
-                *colPtr++ = (static_cast<double>(std::rand()) / RAND_MAX) < prob;
+                *colPtr = (static_cast<double>(std::rand()) / RAND_MAX) < prob;
+                total += *colPtr;
+                colPtr++;
             }
 
             rowPtr++;
@@ -132,7 +141,7 @@ Life::Life(const std::string &file_name){
     std::cout << std::endl;
 }
 
-Life::Life(int size, int **matrix):size(size){
+Life::Life(int size, int **matrix):size(size) , total(0){
     this->matrix = new int* [this->size];
 
     int** rowIn  = matrix;
@@ -147,7 +156,8 @@ Life::Life(int size, int **matrix):size(size){
         int* colEnd = *rowIn+size;
 
         while(colIn < colEnd){
-            *colOut++ = *colIn++;
+            *colOut++ = *colIn;
+            total += *colIn++;
         }
 
         rowIn++;
@@ -244,6 +254,12 @@ void Life::update(void){
             alive = (val == 3) || (val == 2 && (*this)(i,j) == 1);
 
             set(i , j , matrix[i][j] + 2 * alive);
+            // 0: 0 -> 0
+            // 1: 1 -> 0
+            // 2: 0 -> 1
+            // 3: 1 -> 1
+
+            total += (matrix[i][j] == 2) - (matrix[i][j] == 1);
         }
     }
 
