@@ -28,6 +28,9 @@ int main(int argc , char** argv){
     fin >> seed;
     fin >> nsamples;
 
+    if(argc > 1)
+        prob = atof(argv[2])/10.;
+
     fin.close();
 
     vector<Life*> sample;
